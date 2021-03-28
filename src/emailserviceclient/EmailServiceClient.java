@@ -98,7 +98,7 @@ public class EmailServiceClient {
                                                 flag = false;
                                             }
                                         }//send_email%%(email stuff)%%bob¬¬jon¬¬sean¬¬me
-                                        System.out.println(recipients);
+                                        //System.out.println(recipients);
                                         System.out.print("Message subject: ");
                                         String subject = input.nextLine();
                                         System.out.print("Message body: ");
@@ -116,7 +116,6 @@ public class EmailServiceClient {
                                         networkOut.flush();
                                         response = networkIn.nextLine();
 
-                                        System.out.println(response);
                                         String[] components = response.split(breakingChar);
 
                                         if (response.equals("SUCCESS")) {
@@ -135,7 +134,7 @@ public class EmailServiceClient {
                                         break;
                                     }
                                     case 2: {
-                                        //GET_UNREAD_EMAILS
+                                        //GET_UNREAD_EMAILS%%sender¬¬test¬¬var%%sender¬¬test¬¬var%%sender¬¬test¬¬var
                                         message = "GET_UNREAD_EMAILS" + breakingChar + emailAddress;
 
                                         networkOut.println(message);
@@ -143,18 +142,17 @@ public class EmailServiceClient {
                                         response = networkIn.nextLine();
 
                                         String[] components = response.split(breakingChar);
-
                                         //expected response: GET_UNREAD_EMAILS%%(Email stuff)%%(email stuff) or NO_NEW_EMAILS
                                         if (response.equals("NO_NEW_EMAILS")) {
                                             System.out.println("No new Emails!");
                                         } else if (components[0].equals("GET_UNREAD_EMAILS")) {
-                                            for (int i = 1; i < components.length - 1; i++) {
+                                            for (int i = 1; i < components.length; i++) {
                                                 String[] email = components[i].split(breakingObjectChar);
                                                 System.out.println("===========================================================");
-                                                System.out.println("Sender: " + components[1]);
-                                                System.out.println("Send Date: " + components[2]);
-                                                System.out.println("Subject: " + components[3]);
-                                                System.out.println("Content: " + components[4]);
+                                                System.out.println("Sender: " + email[0]);
+                                                System.out.println("Send Date: " + email[1]);
+                                                System.out.println("Subject: " + email[2]);
+                                                System.out.println("Content: " + email[3]);
                                                 System.out.println("===========================================================");
                                             }
                                         } else {
@@ -176,13 +174,13 @@ public class EmailServiceClient {
                                         if (response.equals("NO_EMAILS")) {
                                             System.out.println("No new Emails!");
                                         } else if (components[0].equals("GET_EMAILS")) {
-                                            for (int i = 1; i < components.length - 1; i++) {
+                                            for (int i = 1; i < components.length; i++) {
                                                 String[] email = components[i].split(breakingObjectChar);
                                                 System.out.println("===========================================================");
-                                                System.out.println("Sender: " + components[1]);
-                                                System.out.println("Send Date: " + components[2]);
-                                                System.out.println("Subject: " + components[3]);
-                                                System.out.println("Content: " + components[4]);
+                                                System.out.println("Sender: " + email[0]);
+                                                System.out.println("Send Date: " + email[1]);
+                                                System.out.println("Subject: " + email[2]);
+                                                System.out.println("Content: " + email[3]);
                                                 System.out.println("===========================================================");
                                             }
                                         } else {
@@ -205,13 +203,13 @@ public class EmailServiceClient {
                                         if (response.equals("NO_EMAILS")) {
                                             System.out.println("No new Emails!");
                                         } else if (components[0].equals("GET_EMAILS")) {
-                                            for (int i = 1; i < components.length - 1; i++) {
+                                            for (int i = 1; i < components.length; i++) {
                                                 String[] email = components[i].split(breakingObjectChar);
                                                 System.out.println("===========================================================");
-                                                System.out.println("Sender: " + components[1]);
-                                                System.out.println("Send Date: " + components[2]);
-                                                System.out.println("Subject: " + components[3]);
-                                                System.out.println("Content: " + components[4]);
+                                                System.out.println("Sender: " + email[0]);
+                                                System.out.println("Send Date: " + email[1]);
+                                                System.out.println("Subject: " + email[2]);
+                                                System.out.println("Content: " + email[3]);
                                                 System.out.println("===========================================================");
                                             }
                                         } else {
@@ -220,8 +218,35 @@ public class EmailServiceClient {
                                         break;
                                     }
                                     case 5: {
-                                        //SEARCH_EMAILS
+                                        //GET SEARCH_EMAILS
 
+                                        System.out.println("Type subject name:");
+                                        String subject = input.nextLine();
+
+                                        message = "GET_SEARCH_EMAILS" + breakingChar + emailAddress + breakingChar + subject;
+
+                                        networkOut.println(message);
+                                        networkOut.flush();
+                                        response = networkIn.nextLine();
+
+                                        String[] components = response.split(breakingChar);
+
+                                        //expected response: GET_UNREAD_EMAILS%%(Email stuff)%%(email stuff) or NO_NEW_EMAILS
+                                        if (response.equals("NO_EMAILS")) {
+                                            System.out.println("No new Emails!");
+                                        } else if (components[0].equals("SEARCH_EMAILS")) {
+                                            for (int i = 1; i < components.length; i++) {
+                                                String[] email = components[i].split(breakingObjectChar);
+                                                System.out.println("===========================================================");
+                                                System.out.println("Sender: " + email[0]);
+                                                System.out.println("Send Date: " + email[1]);
+                                                System.out.println("Subject: " + email[2]);
+                                                System.out.println("Content: " + email[3]);
+                                                System.out.println("===========================================================");
+                                            }
+                                        } else {
+                                            System.out.println("Unknown response");
+                                        }
                                         break;
                                     }
                                     case 6: {
@@ -236,17 +261,17 @@ public class EmailServiceClient {
 
                                         //expected response: GET_UNREAD_EMAILS%%(Email stuff)%%(email stuff) or NO_NEW_EMAILS
                                         if (response.equals("NO_EMAILS")) {
-                                            System.out.println("No new Emails!");
+                                            System.out.println("No Emails to delete!");
                                         } else if (components[0].equals("GET_EMAILS")) {
-                                            for (int i = 1; i < components.length - 1; i++) {
+                                            for (int i = 1; i < components.length; i++) {
                                                 String[] email = components[i].split(breakingObjectChar);
-                                                System.out.println(i + ") Sender: " + components[1] + ", Subject:" + components[3]);
+                                                System.out.println(i + ") Sender: " + email[0] + ", Subject:" + email[2]);
                                             }
 
                                             System.out.println("Select Email to delete");
 
                                             int deleteEmailChoice = -1;
-                                            while (deleteEmailChoice < 1 || deleteEmailChoice > components.length - 1) {
+                                            while (deleteEmailChoice < 1 || deleteEmailChoice > components.length) {
                                                 try {
                                                     deleteEmailChoice = input.nextInt();
                                                 } catch (InputMismatchException ex) {
@@ -254,12 +279,14 @@ public class EmailServiceClient {
                                                     input.nextLine();
                                                 }
                                             }
+                                            deleteEmailChoice -= 1;
 
-                                            message = "DELETE_EMAIL" + breakingChar + emailAddress + breakingChar + deleteEmailChoice;
+                                            message = "DELETE_EMAILS" + breakingChar + emailAddress + breakingChar + deleteEmailChoice;
 
                                             networkOut.println(message);
                                             networkOut.flush();
                                             response = networkIn.nextLine();
+                                            System.out.println(response);
 
                                             if (response.equals("SUCCESS")) {
                                                 System.out.println("Email deleted");
@@ -290,11 +317,11 @@ public class EmailServiceClient {
 
                                         //expected response: GET_UNREAD_EMAILS%%(Email stuff)%%(email stuff) or NO_NEW_EMAILS
                                         if (response.equals("NO_EMAILS")) {
-                                            System.out.println("No new Emails!");
+                                            System.out.println("No Emails to mark spam!");
                                         } else if (components[0].equals("GET_EMAILS")) {
-                                            for (int i = 1; i < components.length - 1; i++) {
+                                            for (int i = 1; i < components.length; i++) {
                                                 String[] email = components[i].split(breakingObjectChar);
-                                                System.out.println(i + ") Sender: " + components[1] + ", Subject:" + components[3]);
+                                                System.out.println(i + ") Sender: " + email[0] + ", Subject:" + email[2]);
                                             }
 
                                             System.out.println("Select Email to Mark Spam");
@@ -309,6 +336,8 @@ public class EmailServiceClient {
                                                 }
                                             }
 
+                                            markSpamChoice -= 1;
+
                                             message = "MARK_SPAM" + breakingChar + emailAddress + breakingChar + markSpamChoice;
 
                                             networkOut.println(message);
@@ -316,9 +345,9 @@ public class EmailServiceClient {
                                             response = networkIn.nextLine();
 
                                             if (response.equals("SUCCESS")) {
-                                                System.out.println("Email deleted");
+                                                System.out.println("Email marked spam");
                                             } else if (response.equals("FAILURE")) {
-                                                System.out.println("Email could not be deleted");
+                                                System.out.println("Email could not be marked spam");
                                             } else {
                                                 System.out.println("Unknown response");
                                                 System.out.println(response);
@@ -331,31 +360,51 @@ public class EmailServiceClient {
                                         //DELETE_SPAM
 
                                         message = "DELETE_SPAM" + breakingChar + emailAddress;
+                                        networkOut.println(message);
+                                        networkOut.flush();
+                                        response = networkIn.nextLine();
+
+                                        if (response.equals("SUCCESS")) {
+                                            System.out.println("All spam was deleted!");
+                                        } else if (response.equals("FAILURE")) {
+                                            System.out.println("Spam could not be deleted.");
+                                        } else {
+                                            System.out.println("Unknown response");
+                                            System.out.println(response);
+                                        }
+
+                                        break;
+                                    }
+                                    case 9: {
+                                        message = "GET_SENT_EMAILS" + breakingChar + emailAddress;
 
                                         networkOut.println(message);
                                         networkOut.flush();
                                         response = networkIn.nextLine();
-                                        
-                                        if (response.equals("SUCCESS")) {
-                                                System.out.println("All spam was deleted!");
-                                            } else if (response.equals("FAILURE")) {
-                                                System.out.println("Spam could not be deleted.");
-                                            } else {
-                                                System.out.println("Unknown response");
-                                                System.out.println(response);
+
+                                        String[] components = response.split(breakingChar);
+
+                                        //expected response: GET_UNREAD_EMAILS%%(Email stuff)%%(email stuff) or NO_NEW_EMAILS
+                                        if (response.equals("NO_EMAILS")) {
+                                            System.out.println("No new Emails!");
+                                        } else if (components[0].equals("GET_EMAILS")) {
+                                            for (int i = 1; i < components.length; i++) {
+                                                String[] email = components[i].split(breakingObjectChar);
+                                                System.out.println("===========================================================");
+                                                System.out.println("Sender: " + email[0]);
+                                                System.out.println("Send Date: " + email[1]);
+                                                System.out.println("Subject: " + email[2]);
+                                                System.out.println("Content: " + email[3]);
+                                                System.out.println("===========================================================");
                                             }
-                                        
+                                        } else {
+                                            System.out.println("Unknown response");
+                                        }
                                         break;
                                     }
                                     case 0: {
                                         //LOGOUT
-                                        message = "LOGOUT";
-
-                                        networkOut.println(message);
-                                        networkOut.flush();
-                                        response = networkIn.nextLine();
-                                        
-                                        System.out.println(response);
+                                        System.out.println("Logging out");
                                         break;
                                     }
 
@@ -395,7 +444,7 @@ public class EmailServiceClient {
 
                     case 0: {
                         //CLOSE_CLIENT
-
+                        System.out.println("Closing client");
                         break;
                     }
                 }
@@ -421,7 +470,7 @@ public class EmailServiceClient {
         System.out.println("---------------------------------------------------");
         int choiceAuth = -1;
         while (choiceAuth < 0 || choiceAuth > 2) {
-            System.out.println("What would you like to do?:");
+            System.out.println("What would you like to do?(Type number):");
             System.out.println("1) Login");
             System.out.println("2) Register");
             System.out.println("0) Exit");
@@ -441,8 +490,8 @@ public class EmailServiceClient {
     public static int emailOptionsChoiceMenu(Scanner input) {
         System.out.println("---------------------------------------------------");
         int emailOptionsChoice = -1;
-        while (emailOptionsChoice < 0 || emailOptionsChoice > 7) {
-            System.out.println("What would you like to do?:");
+        while (emailOptionsChoice < 0 || emailOptionsChoice > 9) {
+            System.out.println("What would you like to do?(Type number):");
             System.out.println("1) Send Email");
             System.out.println("2) Check for new emails");
             System.out.println("3) Get all emails");
@@ -451,6 +500,7 @@ public class EmailServiceClient {
             System.out.println("6) Delete email");
             System.out.println("7) Mark email as spam");
             System.out.println("8) Delete all spam");
+            System.out.println("9) Get sent emails");
             System.out.println("0) Exit");
 
             try {
